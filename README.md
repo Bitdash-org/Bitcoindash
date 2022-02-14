@@ -1,21 +1,27 @@
-bitdash integration/staging tree
+Bitdash integration/staging tree
 ================================
 
 http://www.bitdash.org
 
 Copyright (c) 2009-2013 Bitcoin Developers
 Copyright (c) 2011-2013 Litecoin Developers
+Copyright (c) 02-13-2022 Bitdash Developers
 
 What is bitdash?
 ----------------
 
-bitdash is a lite version of Bitcoin using scrypt as a proof-of-work algorithm.
- - 2.5 minute block targets
+Bitdash is a lite version of Bitcoin using scrypt as a proof-of-work algorithm.
+ - 10.0 minute block targets
  - subsidy halves in 840k blocks (~4 years)
  - ~84 million total coins
-
-The rest is the same as Bitcoin.
- - 50 coins per block
+ - 10000000 largest tx in bytes without size fee
+blockchain
+ - 600 desired seconds between blocks 
+ - 0.001244 starting difficulty 
+ - 256000 seconds to difficulty change 
+ - 250000 miner-configurable limit on block size in bytes 
+ - 1000000 hard limit on block size in bytes 
+ - 5000 coins per block
  - 2016 blocks to retarget difficulty
 
 For more information, as well as an immediately useable, binary version of
