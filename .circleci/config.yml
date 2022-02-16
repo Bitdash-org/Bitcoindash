@@ -35,12 +35,41 @@ jobs:
             mkdir -p /tmp/test-reports
             gotestsum --junitfile /tmp/test-reports/unit-tests.xml
       - store_test_results:
-          path: /tmp/test-reports
+          path: /tmp/test-reportsversion: 2.1 workflows: sample: jobs: - build-and-test-frontend jobs: build-and-test-frontend: docker: - image: cimg/node:14.17 working_directory: ./frontend steps: - checkout - restore_cache: name: Restore Yarn Package Cache keys: - yarn-packages-{{ checksum "yarn.lock" }} - run: name: Run jest tests command: | yarn install --frozen-lockfile --cache-folder ~/. yarn test - save_cache: name: Save Yarn Package Cache key: yarn-packages-{{ checksum "yarn.lock" }} paths: - ~/.cache/yarn
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   sample: # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
-    jobs:
-      - build
+  workflows: 
+    sample: 
+      jobs: 
+        - build-and-test-frontend 
+        jobs: 
+          build-and-test-frontend: 
+            
+            docker: 
+              - image: cimg/node:14.17 
+              working_directory: 
+                ./frontend steps: 
+                  - checkout 
+                  - restore_cache: 
+                    name: 
+                      
+                      Restore Yarn Package Cache 
+                      keys: 
+                        - yarn-packages-{{ checksum "yarn.lock" }} 
+                        
+                        - run: 
+                          name: 
+                            
+                            Run jest tests 
+                            command: 
+                              | yarn install --frozen-lockfile --cache-folder ~/. yarn test
+                            - save_cache: 
+                              name: 
+                              Save Yarn Package Cache 
+                               key: 
+                               yarn-packages-{{ checksum "yarn.lock" }}
+                                      paths: - ~/.cache/yarn
