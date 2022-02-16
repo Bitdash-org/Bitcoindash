@@ -42,34 +42,51 @@ jobs:
 workflows:
   sample: # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
+  
+build:
+  working_directory: /tmp
+  steps:
+    - run:
+        name: Creating Dummy Artifacts
+        command: |
+          echo "my artifact file" > /tmp/art-1;
+          mkdir /tmp/artifacts;
+          echo "my artifact files in a dir" > /tmp/artifacts/art-2;
+
+    - store_artifacts:
+        path: /tmp/art-1
+        destination: artifact-file
+
+    - store_artifacts:
+        path: /tmp/artifacts
   workflows: 
     sample: 
-      jobs: 
+    jobs: 
         - build-and-test-frontend 
-        jobs: 
+    jobs: 
           build-and-test-frontend: 
             
-            docker: 
+          docker: 
               - image: cimg/node:14.17 
-              working_directory: 
+          working_directory: 
                 ./frontend steps: 
                   - checkout 
                   - restore_cache: 
                     name: 
                       
                       Restore Yarn Package Cache 
-                      keys: 
+                    keys: 
                         - yarn-packages-{{ checksum "yarn.lock" }} 
                         
                         - run: 
                           name: 
-                            
+                              
                             Run jest tests 
-                            command: 
-                              | yarn install --frozen-lockfile --cache-folder ~/. yarn test
-                            - save_cache: 
-                              name: 
-                              Save Yarn Package Cache 
-                               key: 
-                               yarn-packages-{{ checksum "yarn.lock" }}
-                                      paths: - ~/.cache/yarn
+                        command: | yarn install --frozen-lockfile --cache-folder ~/. yarn test
+                        - save_cache
+                        - name:
+                        Save Yarn Package Cache 
+                        - key:
+                        yarn-packages-{{ checksum "yarn.lock" }}
+                        - paths: 
+                        ~/.cache/yarn
